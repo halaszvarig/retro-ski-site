@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RETRO SKI — 8-bit Skiing Game</title>
+  <meta name="description" content="An authentic C64-style skiing arcade game for iOS and Android. Navigate slalom gates, dodge obstacles, and race legendary real-world slopes.">
+  <link rel="icon" type="image/png" href="icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --white:  #FFFFFF;
+      --grey:   #444444;
+      --red:    #813338;
+      --blue:   #2E2C9B;
+      --green:  #56AC4D;
+      --light:  #B2B2B2;
+      --bg:     #F4F4F4;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--white);
+      color: var(--grey);
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    /* --- NAV --- */
+    nav {
+      background: var(--blue);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav .brand {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.9rem;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    nav a.nav-link {
+      font-size: 0.85rem;
+      color: var(--light);
+      text-decoration: none;
+    }
+
+    nav a.nav-link:hover { color: var(--white); }
+
+    /* --- HERO --- */
+    .hero {
+      text-align: center;
+      padding: 4rem 2rem 3rem;
+      background: linear-gradient(180deg, #ddeeff 0%, var(--white) 100%);
+    }
+
+    .hero img.icon {
+      width: 128px;
+      height: 128px;
+      border-radius: 24px;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 24px rgba(46, 44, 155, 0.2);
+    }
+
+    .hero h1 {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(1.25rem, 5vw, 2.25rem);
+      color: var(--red);
+      text-shadow: 3px 3px 0 rgba(0,0,0,0.15);
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
+    }
+
+    .hero .tagline {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.7rem;
+      color: var(--blue);
+      letter-spacing: 0.1em;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+    }
+
+    .hero p {
+      max-width: 520px;
+      margin: 0 auto;
+      color: var(--grey);
+      font-size: 1.05rem;
+    }
+
+    /* --- FEATURES --- */
+    .features {
+      padding: 3rem 2rem;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .features h2 {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.9rem;
+      color: var(--blue);
+      margin-bottom: 2rem;
+      text-align: center;
+      letter-spacing: 0.1em;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .feature-item {
+      padding: 1rem 1rem 1rem 1.25rem;
+      border-left: 4px solid var(--red);
+    }
+
+    .feature-item strong {
+      display: block;
+      color: var(--grey);
+      margin-bottom: 0.25rem;
+      font-size: 1rem;
+    }
+
+    .feature-item span {
+      font-size: 0.9rem;
+      color: var(--light);
+    }
+
+    /* --- COMING SOON --- */
+    .coming-soon {
+      background: var(--blue);
+      color: var(--white);
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .coming-soon h2 {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.5rem;
+      color: var(--white);
+    }
+
+    .coming-soon ul {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .coming-soon li {
+      font-size: 1rem;
+      background: rgba(255,255,255,0.1);
+      padding: 0.6rem 1.25rem;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    /* --- SCREENSHOTS --- */
+    .screenshots {
+      background: var(--bg);
+      padding: 3rem 0;
+    }
+
+    .screenshots h2 {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.9rem;
+      color: var(--blue);
+      text-align: center;
+      margin-bottom: 2rem;
+      letter-spacing: 0.1em;
+      padding: 0 2rem;
+    }
+
+    .screenshot-scroll {
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+      padding: 0 2rem 1rem;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      justify-content: center;
+    }
+
+    .screenshot-scroll::-webkit-scrollbar { height: 4px; }
+    .screenshot-scroll::-webkit-scrollbar-track { background: var(--light); }
+    .screenshot-scroll::-webkit-scrollbar-thumb { background: var(--blue); }
+
+    .screenshot-scroll img {
+      height: 380px;
+      width: auto;
+      flex-shrink: 0;
+      border: 3px solid var(--grey);
+      scroll-snap-align: start;
+      display: block;
+    }
+
+    /* --- DOWNLOAD --- */
+    .download {
+      text-align: center;
+      padding: 3.5rem 2rem;
+    }
+
+    .download h2 {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.9rem;
+      color: var(--red);
+      margin-bottom: 2rem;
+      letter-spacing: 0.1em;
+    }
+
+    .store-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .store-btn {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0.875rem 2rem;
+      background: var(--grey);
+      color: var(--white);
+      text-decoration: none;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.5rem;
+      letter-spacing: 0.08em;
+      line-height: 1.8;
+      border: 3px solid var(--grey);
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    .store-btn .platform {
+      font-size: 0.65rem;
+      letter-spacing: 0.05em;
+      opacity: 0.7;
+    }
+
+    .store-btn .coming-soon {
+      font-size: 0.45rem;
+      color: var(--light);
+    }
+
+    /* --- FOOTER --- */
+    footer {
+      background: var(--grey);
+      color: var(--light);
+      text-align: center;
+      padding: 1.5rem 2rem;
+      font-size: 0.75rem;
+    }
+
+    footer a {
+      color: var(--light);
+      text-decoration: none;
+    }
+
+    footer a:hover { color: var(--white); }
+
+    footer .sep { margin: 0 0.75rem; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="brand">RETRO SKI</a>
+    <a href="privacy-policy.html" class="nav-link">Privacy Policy</a>
+  </nav>
+
+  <section class="hero">
+    <img src="icon.png" alt="Retro Ski icon" class="icon">
+    <h1>RETRO SKI</h1>
+    <p class="tagline">8-bit slalom arcade</p>
+    <p>
+      An authentic Commodore 64–inspired skiing game for iOS and Android.
+      Navigate slalom gates, dodge trees and rocks, and race down 
+      an endless track or the 10 legendary slopes - all rendered in beautiful C64 style.
+    </p>
+  </section>
+
+  <section class="features">
+    <h2>FEATURES</h2>
+    <div class="features-grid">
+      <div class="feature-item">
+        <strong>Endless Mode</strong>
+        <span>Infinite procedurally-generated runs. How far can you go?</span>
+      </div>
+      <div class="feature-item">
+        <strong>30 Challenge Tracks</strong>
+        <span>10 mountains, 3 levels each — from La Sarenne to Chamrousse.</span>
+      </div>
+      <div class="feature-item">
+        <strong>Authentic C64 Look</strong>
+        <span>C64 color palette, pixel-perfect rendering, C64 font.</span>
+      </div>
+
+      <div class="feature-item">
+        <strong>Tilt or Touch</strong>
+        <span>Classic touch controls or optional accelerometer tilt steering.</span>
+      </div>
+      <div class="feature-item">
+        <strong>Chiptune Audio</strong>
+        <span>C64-style music and sound effects — from wind ambience to gate clips and crashes.</span>
+      </div>
+      <div class="feature-item">
+        <strong>Haptic Feedback</strong>
+        <span>Feel every gate clip and crash through precise haptic feedback.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="coming-soon">
+    <h2>COMING SOON</h2>
+    <ul>
+      <li>🏆 Global leaderboards</li>
+      <li>🎿 Even more game modes</li>
+      <li>🎵 More tunes</li>
+    </ul>
+  </section>
+
+  <section class="screenshots">
+    <h2>SCREENSHOTS</h2>
+    <div class="screenshot-scroll">
+      <img src="screenshot_01_splash.png" alt="Splash screen">
+      <img src="screenshot_02_menu.png"   alt="Main menu">
+      <img src="screenshot_03_gameplay.png" alt="Gameplay — endless run">
+      <img src="screenshot_04_gameplay.png" alt="Gameplay — slalom gates">
+      <img src="screenshot_05_gameplay.png" alt="Gameplay — obstacles">
+      <img src="screenshot_06_options.png"  alt="Options screen">
+    </div>
+  </section>
+
+  <section class="download">
+    <h2>GET THE GAME</h2>
+    <div class="store-buttons">
+      <span class="store-btn">
+        <span class="platform">APP STORE</span>
+        <span class="coming-soon">COMING SOON</span>
+      </span>
+      <span class="store-btn">
+        <span class="platform">GOOGLE PLAY</span>
+        <span class="coming-soon">COMING SOON</span>
+      </span>
+    </div>
+  </section>
+
+  <footer>
+    <span>&copy; 2025 Gábor Halászvári</span>
+    <span class="sep">·</span>
+    <a href="privacy-policy.html">Privacy Policy</a>
+  </footer>
+
+</body>
+</html>
