@@ -1,1 +1,1 @@
-# retro-ski.github.io
+# retro-ski
