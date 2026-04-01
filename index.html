@@ -6,10 +6,12 @@
   <title>RETRO SKI — 8-bit Skiing Game</title>
   <meta name="description" content="An authentic C64-style skiing arcade game for iOS and Android. Navigate slalom gates, dodge obstacles, and race legendary real-world slopes.">
   <link rel="icon" type="image/png" href="icon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
+    @font-face {
+      font-family: 'PetMe64';
+      src: url('PetMe64.ttf') format('truetype');
+      font-display: swap;
+    }
     :root {
       --white:  #FFFFFF;
       --grey:   #444444;
@@ -26,7 +28,7 @@
       font-family: 'Courier New', Courier, monospace;
       background: var(--white);
       color: var(--grey);
-      font-size: 18px;
+      font-size: 20px;
       line-height: 1.6;
     }
 
@@ -40,7 +42,7 @@
     }
 
     nav .brand {
-      font-family: 'Press Start 2P', monospace;
+      font-family: 'PetMe64', monospace;
       font-size: 0.9rem;
       color: var(--white);
       text-decoration: none;
@@ -48,7 +50,8 @@
     }
 
     nav a.nav-link {
-      font-size: 0.85rem;
+      font-family: 'PetMe64', monospace;
+      font-size: 0.9rem;
       color: var(--light);
       text-decoration: none;
     }
@@ -71,8 +74,8 @@
     }
 
     .hero h1 {
-      font-family: 'Press Start 2P', monospace;
-      font-size: clamp(1.25rem, 5vw, 2.25rem);
+      font-family: 'PetMe64', monospace;
+      font-size: clamp(1.5rem, 5vw, 2.75rem);
       color: var(--red);
       text-shadow: 3px 3px 0 rgba(0,0,0,0.15);
       margin-bottom: 1rem;
@@ -80,7 +83,7 @@
     }
 
     .hero .tagline {
-      font-family: 'Press Start 2P', monospace;
+      font-family: 'PetMe64', monospace;
       font-size: 0.7rem;
       color: var(--blue);
       letter-spacing: 0.1em;
@@ -103,7 +106,7 @@
     }
 
     .features h2 {
-      font-family: 'Press Start 2P', monospace;
+      font-family: 'PetMe64', monospace;
       font-size: 0.9rem;
       color: var(--blue);
       margin-bottom: 2rem;
@@ -130,8 +133,8 @@
     }
 
     .feature-item span {
-      font-size: 0.9rem;
-      color: var(--light);
+      font-size: 1rem;
+      color: var(--grey);
     }
 
     /* --- COMING SOON --- */
@@ -143,7 +146,7 @@
     }
 
     .coming-soon h2 {
-      font-family: 'Press Start 2P', monospace;
+      font-family: 'PetMe64', monospace;
       font-size: 0.9rem;
       letter-spacing: 0.1em;
       margin-bottom: 1.5rem;
@@ -172,7 +175,7 @@
     }
 
     .screenshots h2 {
-      font-family: 'Press Start 2P', monospace;
+      font-family: 'PetMe64', monospace;
       font-size: 0.9rem;
       color: var(--blue);
       text-align: center;
@@ -211,7 +214,7 @@
     }
 
     .download h2 {
-      font-family: 'Press Start 2P', monospace;
+      font-family: 'PetMe64', monospace;
       font-size: 0.9rem;
       color: var(--red);
       margin-bottom: 2rem;
@@ -233,8 +236,8 @@
       background: var(--grey);
       color: var(--white);
       text-decoration: none;
-      font-family: 'Press Start 2P', monospace;
-      font-size: 0.5rem;
+      font-family: 'PetMe64', monospace;
+      font-size: 0.6rem;
       letter-spacing: 0.08em;
       line-height: 1.8;
       border: 3px solid var(--grey);
@@ -243,13 +246,13 @@
     }
 
     .store-btn .platform {
-      font-size: 0.65rem;
+      font-size: 0.75rem;
       letter-spacing: 0.05em;
       opacity: 0.7;
     }
 
     .store-btn .coming-soon {
-      font-size: 0.45rem;
+      font-size: 0.55rem;
       color: var(--light);
     }
 
@@ -259,7 +262,7 @@
       color: var(--light);
       text-align: center;
       padding: 1.5rem 2rem;
-      font-size: 0.75rem;
+      font-size: 0.8rem;
     }
 
     footer a {
