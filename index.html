@@ -73,50 +73,28 @@
       box-shadow: 0 4px 24px rgba(0,0,0,0.5);
     }
 
-    /* C64 screen widget */
-    .c64-screen {
-      position: relative;
-      display: inline-block;
-      max-width: 580px;
-      width: 100%;
-    }
-
-    .c64-screen canvas {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      display: block;
-    }
-
-    .c64-screen-content {
-      position: relative;
+    .hero h1 {
       font-family: 'PetMe64', monospace;
-      background: #2E2C9B;
-      color: #8ABFC7;
-      text-align: left;
-      padding: 1.5rem 1.75rem;
-      margin: 28px;
-      font-size: clamp(0.65rem, 2vw, 0.85rem);
-      line-height: 1.8;
-      min-height: 180px;
+      font-size: clamp(1.5rem, 5vw, 2.75rem);
+      color: var(--white);
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
     }
 
-    .c64-screen-content .c64-title {
-      color: #FFFFFF;
-      margin-bottom: 0.75rem;
+    .hero .tagline {
+      font-family: 'PetMe64', monospace;
+      font-size: 0.7rem;
+      color: var(--light);
+      letter-spacing: 0.1em;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
     }
 
-    .c64-cursor {
-      display: inline-block;
-      width: 0.6em;
-      height: 1em;
-      background: #8ABFC7;
-      vertical-align: middle;
-      animation: blink 1s step-end infinite;
-    }
-
-    @keyframes blink {
-      50% { opacity: 0; }
+    .hero p {
+      max-width: 520px;
+      margin: 0 auto;
+      color: var(--light);
+      font-size: 1.05rem;
     }
 
     /* --- FEATURES --- */
@@ -283,22 +261,13 @@
 
   <section class="hero">
     <img src="icon.png" alt="Retro Ski icon" class="icon">
-    <div class="c64-screen">
-      <canvas id="c64Canvas"></canvas>
-      <div class="c64-screen-content">
-        <div>LOAD"RETRO SKI",8,1</div>
-        <div></div>
-        <div>READY.</div>
-        <div>RUN<span class="c64-cursor"></span></div>
-        <br>
-        <div class="c64-title">**** RETRO SKI V1.0 ****</div>
-        <div>8-BIT SLALOM ARCADE</div>
-        <br>
-        <div>NAVIGATE GATES, DODGE TREES AND</div>
-        <div>ROCKS, AND RACE DOWN 10 LEGENDARY</div>
-        <div>SLOPES IN AUTHENTIC C64 STYLE.</div>
-      </div>
-    </div>
+    <h1>RETRO SKI</h1>
+    <p class="tagline">8-bit slalom arcade</p>
+    <p>
+      An authentic Commodore 64–inspired skiing game for iOS and Android.
+      Navigate slalom gates, dodge trees and rocks, and race down
+      an endless track or 10 legendary slopes — all in authentic C64 style.
+    </p>
   </section>
 
   <section class="screenshots">
@@ -375,54 +344,5 @@
     <a href="privacy-policy.html">Privacy Policy</a>
   </footer>
 
-  <script>
-    (function () {
-      const VIC2 = [
-        '#000000','#FFFFFF','#813338','#8ABFC7',
-        '#9A4FA7','#56AC4D','#2E2C9B','#C7CA74',
-        '#C97620','#6B4B1A','#B86167','#444444',
-        '#7B7B7B','#A9E08A','#7071C9','#B2B2B2'
-      ];
-      // Varying stripe heights to mimic uneven raster timing
-      const STRIPES = [4, 2, 7, 3, 5, 2, 8, 3, 4, 6, 2, 5, 3, 7, 4, 2, 6, 3, 5, 8];
-      const BORDER  = 28;
-      const SCREEN_BG = '#2E2C9B';
-
-      const wrapper = document.querySelector('.c64-screen');
-      const canvas  = document.getElementById('c64Canvas');
-      const ctx     = canvas.getContext('2d');
-      let frame = 0;
-
-      function resize() {
-        canvas.width  = wrapper.offsetWidth;
-        canvas.height = wrapper.offsetHeight;
-      }
-
-      function draw() {
-        const w = canvas.width, h = canvas.height;
-        if (w === 0 || h === 0) { requestAnimationFrame(draw); return; }
-
-        // Draw full-width horizontal stripes across the entire canvas
-        let y = 0, si = 0, ci = Math.floor(frame);
-        while (y < h) {
-          const sh = STRIPES[si % STRIPES.length];
-          ctx.fillStyle = VIC2[ci % VIC2.length];
-          ctx.fillRect(0, y, w, sh);
-          y += sh; si++; ci++;
-        }
-
-        // Cover center with blue screen — stripes show only in border region
-        ctx.fillStyle = SCREEN_BG;
-        ctx.fillRect(BORDER, BORDER, w - BORDER * 2, h - BORDER * 2);
-
-        frame = (frame + 0.03) % VIC2.length;
-        requestAnimationFrame(draw);
-      }
-
-      window.addEventListener('resize', () => { resize(); });
-      resize();
-      draw();
-    })();
-  </script>
 </body>
 </html>
